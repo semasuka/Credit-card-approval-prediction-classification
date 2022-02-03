@@ -1,5 +1,5 @@
-.cc_approval/
+.Credit_approval_env/
 .DS_Store
+.ipynb_checkpoints/
 saved_models/
 saved_models_final/
-.ipynb_checkpoints/
