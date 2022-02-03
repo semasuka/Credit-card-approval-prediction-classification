@@ -243,133 +243,128 @@ def full_pipeline(df):
 
 
 
-cc_train_prep = full_pipeline(train_copy)
+############################# Streamlit ############################
 
-st.write(cc_train_prep.head())
+st.write("""
+# Credit card approval prediction
+This app predicts if an applicant will be approved for a credit card or not. Each time there is a hard enquiry your credit score is affected negatively. This app predict the probability of being approved without affecting your credit score. Just fill in the following information and click on the Predict button.:
+""")
 
+# Age input slider
+st.write("""
+## Age
+""")
+input_age = st.slider('Select your age', value=42, min_value=18, max_value=70, step=1)
 
-# def drop_least_useful_ft(prep_data,feat_list):
-#     X_train_copy_prep_drop_ft = prep_data.drop(feat_list,axis=1)
-#     return X_train_copy_prep_drop_ft
-
-
-
-# ############################ Streamlit ############################
-
-# st.write("""
-# # Income Classification
-# This app predicts if your income is high or low than $50000. Just fill in the following information and click on the Predict button.:
-# """)
-
-# # Age input slider
-# st.write("""
-# ## Age
-# """)
-# input_age = st.slider('Select your age', value=38, min_value=15, max_value=78, step=1)
-
-# #Gender input
-# st.write("""
-# ## Gender
-# """)
-# input_gender = st.radio('Select you gender',['Male','Female'], index=0)
+#Gender input
+st.write("""
+## Gender
+""")
+input_gender = st.radio('Select you gender',['Male','Female'], index=0)
 
 
-# # Workclass input dropdown
-# st.write("""
-# ## Workclass
-# """)
-# work_class_values = list(value_cnt_norm_cal(full_data,'workclass').index)
-# work_class_key = ['Private sector', 'Self employed (not incorporated)', 'Local government', 'State government', 'Self employed (incorporated)', 'Without work', 'Never worked']
-# work_class_dict = dict(zip(work_class_key,work_class_values))
-# input_workclass_key = st.selectbox('Select your workclass', work_class_key)
-# input_workclass_val = work_class_dict.get(input_workclass_key)
+# Marital status input dropdown
+st.write("""
+## Marital status
+""")
+marital_status_values = list(value_cnt_norm_cal(full_data,'Marital status').index)
+marital_status_key = ['Married', 'Single/not married', 'Civil marriage', 'Separated', 'Widowed']
+marital_status_dict = dict(zip(marital_status_key,marital_status_values))
+input_marital_status_key = st.selectbox('Select your marital status', marital_status_key)
+input_marital_status_val = marital_status_dict.get(input_marital_status_key)
 
 
-# # Education level input dropdown
-# st.write("""
-# ## Education level
-# """)
-# initial_edu_df = full_data[['education','educational-num']].drop_duplicates().sort_values(by='educational-num').reset_index(drop=True)
-# edu_key = ['Pre-school', '1st to 4th grade', '5th to 6th grade', '7th to 8th grade', '9th grade', '10th grade', '11th grade', '12th grade no diploma', 'High school graduate', 'Some college', 'Associate degree (vocation)','Associate degree (academic)' ,'Bachelor\'s degree', 'Master\'s degree', 'Professional school', 'Doctorate degree']
-# edu_df = pd.concat([initial_edu_df,pd.DataFrame(edu_key,columns=['education-letter'])],axis=1)
-# edu_dict = edu_df.set_index('education-letter').to_dict()['educational-num']
-# input_edu_key = st.selectbox('Select your highest education level', edu_df['education-letter'])
-# input_edu_val = edu_dict.get(input_edu_key)
-# input_education = edu_df.iloc[[input_edu_val-1]]['education'].values[0]
+# Family member count
+st.write("""
+## Family member count
+""")
+fam_member_count = float(st.selectbox('Select your family member count', [1,2,3,4,5,6,7,8,9,10]))
 
 
-# # Marital status input dropdown
-# st.write("""
-# ## Marital status
-# """)
-# marital_status_values = list(value_cnt_norm_cal(full_data,'marital-status').index)
-# marital_status_key = ['Married (civilian spouse)', 'Never married', 'Divorced', 'Separated', 'Widowed', 'Married (abscent spouse)', 'Married (armed forces spouse)']
-# marital_status_dict = dict(zip(marital_status_key,marital_status_values))
-# input_marital_status_key = st.selectbox('Select your marital status', marital_status_key)
-# input_marital_status_val = marital_status_dict.get(input_marital_status_key)
+# Workclass input dropdown
+st.write("""
+## Dwelling type
+""")
+dwelling_type_values = list(value_cnt_norm_cal(full_data,'Dwelling').index)
+dwelling_type_key = ['House / apartment', 'Live with parents', 'Municipal apartment ', 'Rented apartment', 'Office apartment', 'Co-op apartment']
+dwelling_type_dict = dict(zip(dwelling_type_key,dwelling_type_values))
+input_dwelling_type_key = st.selectbox('Select your workclass', dwelling_type_key)
+input_dwelling_type_val = dwelling_type_dict.get(input_dwelling_type_key)
 
 
-
-# #Occupation input dropdown
-# st.write("""
-# ## Occupation
-# """)
-# occupation_values = list(value_cnt_norm_cal(full_data,'occupation').index)
-# occupation_key = ['Craftman & repair', 'Professional specialty', 'Executive and managerial role', 'Administrative clerk','Sales', 'Other services', 'Machine operator & inspector', 'Transportation & moving', 'Handlers & cleaners', 'Farming & fishing', 'Technical support', 'Protective service', 'Private house service', 'Armed forces']
-# occupation_dict = dict(zip(occupation_key,occupation_values))
-# input_occupation_key = st.selectbox('Select your occupation', occupation_dict)
-# input_occupation_val = occupation_dict.get(input_occupation_key)
-
-# # Relationship input dropdown
-# st.write("""
-# ## Relationship
-# """)
-# relationship_values = list(value_cnt_norm_cal(full_data,'relationship').index)
-# relationship_key = ['Husband', 'Not in a family', 'Own child', 'Not married','Wife', 'Other relative']
-# relationship_dict = dict(zip(relationship_key,relationship_values))
-# input_relationship_key = st.selectbox('Select the type of relationship', relationship_dict)
-# input_relationship_val = relationship_dict.get(input_relationship_key)
-
-# # Race input dropdown
-# st.write("""
-# ## Race
-# """)
-# race_values = list(value_cnt_norm_cal(full_data,'race').index)
-# race_key = ['White', 'Black', 'Asian & pacific islander', 'American first nation','Other']
-# race_dict = dict(zip(race_key,race_values))
-# input_race_key = st.selectbox('Select your race', race_dict)
-# input_race_val = race_dict.get(input_race_key)
-
-# # Capital gain input
-# st.write("""
-# ## Capital gain
-# """)
-# input_capital_gain = st.text_input('Enter any capital gain amount',0,help='A capital gain is a profit from the sale of property or an investment.')
+# Income
+st.write("""
+## Income
+""")
+input_income = st.text_input('Enter your income (in USD)',0)
 
 
-# # Capital gain input
-# st.write("""
-# ## Capital loss
-# """)
-# input_capital_loss = st.text_input('Enter any capital loss amount',0,help='A capital loss is a loss from the sale of property or an investment when sold for less than the price it was purchased for.')
+# Employment status dropdown
+st.write("""
+## Employment status
+""")
+employment_status_values = list(value_cnt_norm_cal(full_data,'Employment status').index)
+employment_status_key = ['Working','Commercial associate','Pensioner','State servant','Student']
+employment_status_dict = dict(zip(employment_status_key,employment_status_values))
+input_employment_status_key = st.selectbox('Select your employment status', employment_status_key)
+input_employment_status_val = employment_status_dict.get(input_employment_status_key)
 
-# # Age input slider
-# st.write("""
-# ## Hours worked per week
-# """)
-# input_hours_worked = st.slider('Select the number of hours you work per week', value=40, min_value=0, max_value=110, step=1)
 
-# # Country of residence input dropdown
-# st.write("""
-# ## Country of residence
-# """)
-# input_country = st.selectbox('Select your country of residence', gdp_data['native-country'].sort_values())
-# gdp = gdp_grouping(input_country)
+# Employment length input slider
+st.write("""
+## Employment length
+""")
+input_employment_length = st.slider('Select your employment length', value=6, min_value=0, max_value=30, step=1)
 
-# st.markdown('##')
-# st.markdown('##')
-# # Button
-# predict_bt = st.button('Predict')
+
+# Education level dropdown
+st.write("""
+## Education level
+""")
+edu_level_values = list(value_cnt_norm_cal(full_data,'Education level').index)
+edu_level_key = ['Secondary school','Higher education','Incomplete higher','Lower secondary','Academic degree']
+edu_level_dict = dict(zip(employment_status_key,employment_status_values))
+input_edu_level_key = st.selectbox('Select your education status', edu_level_key)
+input_edu_level_val = edu_level_dict.get(input_edu_level_key)
+
+
+# Car ownship input
+st.write("""
+## Car ownship
+""")
+input_car_ownship = st.radio('Do you own a car?',['Yes','No'], index=0)
+
+# Property ownship input
+st.write("""
+## Property ownship
+""")
+input_prop_ownship = st.radio('Do you own a property?',['Yes','No'], index=0)
+
+
+# Work phone input
+st.write("""
+## Work phone
+""")
+input_work_phone = st.radio('Do you have a work phone?',['Yes','No'], index=0)
+
+# Phone input
+st.write("""
+## Phone
+""")
+input_phone = st.radio('Do you have a phone?',['Yes','No'], index=0)
+
+
+# Email input
+st.write("""
+## Email
+""")
+input_email = st.radio('Do you have an email?',['Yes','No'], index=0)
+
+
+st.markdown('##')
+st.markdown('##')
+# Button
+predict_bt = st.button('Predict')
 
 # profile_to_predict = [input_age, input_workclass_val, 0, input_education, input_edu_val, input_marital_status_val, input_occupation_val, input_relationship_val, input_race_val,input_gender, float(input_capital_gain), float(input_capital_loss), input_hours_worked, input_country, gdp,-1.000]
 
