@@ -250,17 +250,20 @@ st.write("""
 This app predicts if an applicant will be approved for a credit card or not. Each time there is a hard enquiry your credit score is affected negatively. This app predict the probability of being approved without affecting your credit score. Just fill in the following information and click on the Predict button.:
 """)
 
+#Gender input
+st.write("""
+## Gender
+""")
+input_gender = st.radio('Select you gender',['Male','Female'], index=0)
+
+
 # Age input slider
 st.write("""
 ## Age
 """)
 input_age = st.slider('Select your age', value=42, min_value=18, max_value=70, step=1)
 
-#Gender input
-st.write("""
-## Gender
-""")
-input_gender = st.radio('Select you gender',['Male','Female'], index=0)
+
 
 
 # Marital status input dropdown
@@ -281,7 +284,7 @@ st.write("""
 fam_member_count = float(st.selectbox('Select your family member count', [1,2,3,4,5,6,7,8,9,10]))
 
 
-# Workclass input dropdown
+# Dwelling type dropdown
 st.write("""
 ## Dwelling type
 """)
@@ -323,7 +326,7 @@ st.write("""
 """)
 edu_level_values = list(value_cnt_norm_cal(full_data,'Education level').index)
 edu_level_key = ['Secondary school','Higher education','Incomplete higher','Lower secondary','Academic degree']
-edu_level_dict = dict(zip(employment_status_key,employment_status_values))
+edu_level_dict = dict(zip(edu_level_key,edu_level_values))
 input_edu_level_key = st.selectbox('Select your education status', edu_level_key)
 input_edu_level_val = edu_level_dict.get(input_edu_level_key)
 
@@ -346,31 +349,63 @@ st.write("""
 ## Work phone
 """)
 input_work_phone = st.radio('Do you have a work phone?',['Yes','No'], index=0)
+work_phone_dict = {'Yes':1,'No':0}
+work_phone_val = work_phone_dict.get(input_work_phone)
 
 # Phone input
 st.write("""
 ## Phone
 """)
 input_phone = st.radio('Do you have a phone?',['Yes','No'], index=0)
-
+work_dict = {'Yes':1,'No':0}
+phone_val = work_dict.get(input_phone)
 
 # Email input
 st.write("""
 ## Email
 """)
 input_email = st.radio('Do you have an email?',['Yes','No'], index=0)
-
+email_dict = {'Yes':1,'No':0}
+email_val = email_dict.get(input_email)
 
 st.markdown('##')
 st.markdown('##')
 # Button
 predict_bt = st.button('Predict')
 
-# profile_to_predict = [input_age, input_workclass_val, 0, input_education, input_edu_val, input_marital_status_val, input_occupation_val, input_relationship_val, input_race_val,input_gender, float(input_capital_gain), float(input_capital_loss), input_hours_worked, input_country, gdp,-1.000]
+# list of all the input variables
+profile_to_predict = [0,
+                    input_gender[:1],
+                    input_car_ownship[:1],
+                    input_prop_ownship[:1],
+                    0,
+                    input_income,
+                    input_employment_status_val,
+                    input_edu_level_val,
+                    input_marital_status_val,
+                    input_dwelling_type_val,
+                    input_age,
+                    input_employment_length,
+                    1,
+                    work_phone_val,
+                    phone_val,
+                    email_val,
+                    'to_be_droped',
+                    fam_member_count,
+                    0.00,
+                    0]
 
-# profile_to_predict_df = pd.DataFrame([profile_to_predict],columns=train_copy.columns)
+
+
+#profile_to_predict_df = pd.DataFrame([profile_to_predict],columns=train_copy.columns)
+
+
+st.write(profile_to_predict)
+st.write(train_copy)
 
 # train_copy_with_profile_to_pred = pd.concat([train_copy,profile_to_predict_df],ignore_index=True)
+
+# st.write(train_copy_with_profile_to_pred)
 
 
 
