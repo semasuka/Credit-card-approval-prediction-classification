@@ -41,6 +41,9 @@ test_copy = test_original.copy()
 
 
 def value_cnt_norm_cal(df,feature):
+    '''
+    Function to calculate the count of each value in a feature and normalize it
+    '''
     ftr_value_cnt = df[feature].value_counts()
     ftr_value_cnt_norm = df[feature].value_counts(normalize=True) * 100
     ftr_value_cnt_concat = pd.concat([ftr_value_cnt, ftr_value_cnt_norm], axis=1)
@@ -172,6 +175,7 @@ class OneHotWithFeatNames(BaseEstimator,TransformerMixin):
             one_hot_enc_df = one_hot_enc(df,self.one_hot_enc_ft)
             # returns the concatenated dataframe
             full_df_one_hot_enc = concat_with_rest(df,one_hot_enc_df,self.one_hot_enc_ft)
+            print(full_df_one_hot_enc.tail(25))
             return full_df_one_hot_enc
         else:
             print("One or more features are not in the dataframe")
@@ -261,7 +265,7 @@ input_gender = st.radio('Select you gender',['Male','Female'], index=0)
 st.write("""
 ## Age
 """)
-input_age = st.slider('Select your age', value=42, min_value=18, max_value=70, step=1)
+input_age = np.negative(st.slider('Select your age', value=42, min_value=18, max_value=70, step=1) * 365.25)
 
 
 
@@ -299,7 +303,7 @@ input_dwelling_type_val = dwelling_type_dict.get(input_dwelling_type_key)
 st.write("""
 ## Income
 """)
-input_income = st.text_input('Enter your income (in USD)',0)
+input_income = np.int(st.text_input('Enter your income (in USD)',0))
 
 
 # Employment status dropdown
@@ -317,7 +321,7 @@ input_employment_status_val = employment_status_dict.get(input_employment_status
 st.write("""
 ## Employment length
 """)
-input_employment_length = st.slider('Select your employment length', value=6, min_value=0, max_value=30, step=1)
+input_employment_length = np.negative(st.slider('Select your employment length', value=6, min_value=0, max_value=30, step=1) * 365.25)
 
 
 # Education level dropdown
@@ -397,44 +401,46 @@ profile_to_predict = [0,
 
 
 
-#profile_to_predict_df = pd.DataFrame([profile_to_predict],columns=train_copy.columns)
-
-
-st.write(profile_to_predict)
-st.write(train_copy)
-
-# train_copy_with_profile_to_pred = pd.concat([train_copy,profile_to_predict_df],ignore_index=True)
-
-# st.write(train_copy_with_profile_to_pred)
+profile_to_predict_df = pd.DataFrame([profile_to_predict],columns=train_copy.columns)
 
 
 
 
 
+# add the profile to predict as a last row in the train data
+train_copy_with_profile_to_pred = pd.concat([train_copy,profile_to_predict_df],ignore_index=True)
 
-
-# train_copy_prep = full_pipeline_fuc(train_copy)
-
-# test_copy_prep = full_pipeline_fuc(test_copy)
-
-# X_train_copy_prep = train_copy_prep.iloc[:,:-1]
-
-# y_train_copy_prep = train_copy_prep.iloc[:,-1]
-
-
-# X_test_copy_prep = test_copy_prep.iloc[:,:-1]
-
-
-# y_test_copy_prep = test_copy_prep.iloc[:,-1]
+st.write(train_copy_with_profile_to_pred)
 
 
 
-# train_copy_with_profile_to_pred = full_pipeline_fuc(train_copy_with_profile_to_pred)
+
+
+
+train_copy_prep = full_pipeline(train_copy)
+
+
+
+
+
+X_train_copy_prep = train_copy_prep.iloc[:,:-1]
+
+y_train_copy_prep = train_copy_prep.iloc[:,-1]
+
+
+
+
+
+train_copy_with_profile_to_pred_prep = full_pipeline(train_copy_with_profile_to_pred)
+
+st.write(train_copy_with_profile_to_pred_prep)
 
 # profile_to_pred_prep = train_copy_with_profile_to_pred.iloc[-1:,:-1]
 
 
+# st.write(X_test_copy_prep)
 
+# st.write(profile_to_pred_prep)
 
 
 
