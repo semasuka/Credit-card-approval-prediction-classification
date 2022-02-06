@@ -65,14 +65,14 @@ class OutlierRemover(BaseEstimator, TransformerMixin):
             Q3 = df[self.feat_with_outliers].quantile(.75)
             IQR = Q3 - Q1
             # keep the data within 1.5 IQR
-            df = df[~((df[self.feat_with_outliers] < (Q1 - 1.5 * IQR)) |(df[self.feat_with_outliers] > (Q3 + 1.5 * IQR))).any(axis=1)]
+            df = df[~((df[self.feat_with_outliers] < (Q1 - 3 * IQR)) |(df[self.feat_with_outliers] > (Q3 + 3 * IQR))).any(axis=1)]
             return df
         else:
             print("One or more features are not in the dataframe")
             return df
 
 class DropFeatures(BaseEstimator,TransformerMixin):
-    def __init__(self,feature_to_drop = ['ID','Has a mobile phone','Children count','Job title','Account age']):
+    def __init__(self,feature_to_drop = ['Has a mobile phone','Children count','Job title','Account age']):
         self.feature_to_drop = feature_to_drop
     def fit(self,df):
         return self
@@ -232,9 +232,9 @@ class OversampleSMOTE(BaseEstimator,TransformerMixin):
         if 'Is high risk' in df.columns:
             # SMOTE function to oversample the minority class to fix the imbalance data
             smote = SMOTE()
-            X_bal, y_bal = smote.fit_resample(df.loc[:, df.columns != 'Is high risk'],df['Is high risk'])
-            df_bal = pd.concat([pd.DataFrame(X_bal),pd.DataFrame(y_bal)],axis=1)
-            return df_bal
+            X_bal, y_bal = smote.fit_resample(df.iloc[:,:-1],df.iloc[:,-1])
+            X_y_bal = pd.concat([pd.DataFrame(X_bal),pd.DataFrame(y_bal)],axis=1)
+            return X_y_bal
         else:
             print("Is high risk is not in the dataframe")
             return df
@@ -299,7 +299,7 @@ input_marital_status_val = marital_status_dict.get(input_marital_status_key)
 st.write("""
 ## Family member count
 """)
-fam_member_count = float(st.selectbox('Select your family member count', [1,2,3,4,5,6,7,8,9,10]))
+fam_member_count = float(st.selectbox('Select your family member count', [1,2,3,4,5,6]))
 
 
 # Dwelling type dropdown
@@ -392,26 +392,27 @@ st.markdown('##')
 predict_bt = st.button('Predict')
 
 # list of all the input variables
-profile_to_predict = [0,
-                    input_gender[:1],
-                    input_car_ownship[:1],
-                    input_prop_ownship[:1],
-                    0,
-                    input_income,
-                    input_employment_status_val,
-                    input_edu_level_val,
-                    input_marital_status_val,
-                    input_dwelling_type_val,
-                    input_age,
-                    input_employment_length,
-                    1,
-                    work_phone_val,
-                    phone_val,
-                    email_val,
-                    'to_be_droped',
-                    fam_member_count,
-                    0.00,
-                    0]
+profile_to_predict = [0, # ID
+                    input_gender[:1], # gender
+                    input_car_ownship[:1], # car ownership
+                    input_prop_ownship[:1], # property ownership
+                    0, # Children count (which will be dropped in the pipeline)
+                    input_income, # Income
+                    input_employment_status_val, # Employment status
+                    input_edu_level_val, # Education level
+                    input_marital_status_val, # Marital status
+                    input_dwelling_type_val, # Dwelling type
+                    input_age, # Age
+                    input_employment_length,    # Employment length
+                    1, # Has a mobile phone (which will be dropped in the pipeline)
+                    work_phone_val, # Work phone
+                    phone_val, # Phone
+                    email_val,  # Email
+                    'to_be_droped', # Job title (which will be dropped in the pipeline)
+                    fam_member_count,  # Family member count
+                    0.00, # Account age (which will be dropped in the pipeline)
+                    0 # target set to 0 as a placeholder
+                    ]
 
 
 
@@ -420,107 +421,61 @@ profile_to_predict_df = pd.DataFrame([profile_to_predict],columns=train_copy.col
 
 
 
-
 # add the profile to predict as a last row in the train data
 train_copy_with_profile_to_pred = pd.concat([train_copy,profile_to_predict_df],ignore_index=True)
 
-st.write(train_copy_with_profile_to_pred)
 
 
 
 
-
-
-# train_copy_prep = full_pipeline(train_copy)
-
-
-
-
-
-# X_train_copy_prep = train_copy_prep.iloc[:,:-1]
-
-# y_train_copy_prep = train_copy_prep.iloc[:,-1]
-
-
-
-
-
+# whole dataset prepared
 train_copy_with_profile_to_pred_prep = full_pipeline(train_copy_with_profile_to_pred)
 
-profile_to_pred_prep = train_copy_with_profile_to_pred_prep[train_copy_with_profile_to_pred_prep['Is high risk'] == 0].iloc[-1:,:-1]
-
-st.write(profile_to_pred_prep)
-
-# profile_to_pred_prep = train_copy_with_profile_to_pred.iloc[-1:,:-1]
-
-
-# st.write(X_test_copy_prep)
-
-# st.write(profile_to_pred_prep)
+# Get the row with the ID = 0, and drop the ID, and target(placeholder) column
+profile_to_pred_prep = train_copy_with_profile_to_pred_prep[train_copy_with_profile_to_pred_prep['ID'] == 0].drop(columns=['ID','Is high risk'])
 
 
 
 
-
-# rand_forest_least_pred = [
-#     'occupation_Handlers-cleaners',
-#     'workclass_Federal-gov',
-#     'marital-status_Married-AF-spouse',
-#     'race_Amer-Indian-Eskimo',
-#     'occupation_Protective-serv',
-#     'marital-status_Married-spouse-absent',
-#     'race_Other',
-#     'workclass_Without-pay',
-#     'occupation_Armed-Forces',
-#     'occupation_Priv-house-serv'
-# ]
+#Animation function
+@st.experimental_memo
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
 
 
-
-# profile_to_pred_prep_drop_ft = drop_least_useful_ft(profile_to_pred_prep,rand_forest_least_pred)
-
-# st.markdown('##')
-# st.markdown('##')
+lottie_loading_an = load_lottieurl('https://assets3.lottiefiles.com/packages/lf20_szlepvdh.json')
 
 
-# #Animation function
-# @st.experimental_memo
-# def load_lottieurl(url: str):
-#     r = requests.get(url)
-#     if r.status_code != 200:
-#         return None
-#     return r.json()
+def make_prediction():
+    # connect to s3 bucket
+    client = boto3.client('s3', aws_access_key_id=st.secrets["access_key"],aws_secret_access_key=st.secrets["secret_access_key"]) # for s3 API keys when deployed on streamlit share
+    #client = boto3.client('s3', aws_access_key_id=access_key,aws_secret_access_key=secret_access_key) # for s3 API keys when deployed on locally
 
+    bucket_name = "creditapplipred"
+    key = "gradient_boosting_model.sav"
 
-# lottie_loading_an = load_lottieurl('https://assets3.lottiefiles.com/packages/lf20_szlepvdh.json')
+    # load the model from s3 in a temporary file
+    with tempfile.TemporaryFile() as fp:
+        client.download_fileobj(Fileobj=fp, Bucket=bucket_name, Key=key)
+        fp.seek(0)
+        model = joblib.load(fp)
 
+    # prediction from the model on AWS S3
+    return model.predict(profile_to_pred_prep)
 
-# def make_prediction():
-#     # connect to s3 bucket
-#     client = boto3.client('s3', aws_access_key_id=st.secrets["access_key"],aws_secret_access_key=st.secrets["secret_access_key"]) # for s3 API keys when deployed on streamlit share
-#     #client = boto3.client('s3', aws_access_key_id=access_key,aws_secret_access_key=secret_access_key) # for s3 API keys when deployed on locally
+if predict_bt:
 
-#     bucket_name = "incomepredbucket"
-#     key = "rand_forest_clf.sav"
-
-#     # load the model from s3 in a temporary file
-#     with tempfile.TemporaryFile() as fp:
-#         client.download_fileobj(Fileobj=fp, Bucket=bucket_name, Key=key)
-#         fp.seek(0)
-#         model = joblib.load(fp)
-
-#     # prediction from the model on AWS S3
-#     return model.predict(profile_to_pred_prep_drop_ft)
-
-# if predict_bt:
-
-#     with st_lottie_spinner(lottie_loading_an, quality='high', height='200px', width='200px'):
-#         final_pred = make_prediction()
-#     # if final_pred exists, then stop displaying the loading animation
-#     if final_pred[0] == 1.0:
-#         st.success('## You most likely make more than 50k')
-#     else:
-#         st.error('## You most likely make less than 50k')
+    with st_lottie_spinner(lottie_loading_an, quality='high', height='200px', width='200px'):
+        final_pred = make_prediction()
+    # if final_pred exists, then stop displaying the loading animation
+    if final_pred[0] == 1.0:
+        st.success('## You have been approved for a credit card')
+        st.balloons()
+    else:
+        st.error('## Unfortunately, you have not been for a credit card')
 
 
 
