@@ -210,6 +210,19 @@ class MinMaxWithFeatNames(BaseEstimator,TransformerMixin):
             print("One or more features are not in the dataframe")
             return df
 
+class ChangeToNumTarget(BaseEstimator,TransformerMixin):
+    def __init__(self):
+        pass
+    def fit(self,df):
+        return self
+    def transform(self,df):
+        if 'Is high risk' in df.columns:
+            df['Is high risk'] = pd.to_numeric(df['Is high risk'])
+            return df
+        else:
+            print("Is high risk is not in the dataframe")
+            return df
+
 class OversampleSMOTE(BaseEstimator,TransformerMixin):
     def __init__(self):
         pass
@@ -219,7 +232,7 @@ class OversampleSMOTE(BaseEstimator,TransformerMixin):
         if 'Is high risk' in df.columns:
             # SMOTE function to oversample the minority class to fix the imbalance data
             smote = SMOTE()
-            X_bal, y_bal = smote.fit_resample(df.loc[:, df.columns != 'Is high risk'],df['Is high risk'].astype('int64'))
+            X_bal, y_bal = smote.fit_resample(df.loc[:, df.columns != 'Is high risk'],df['Is high risk'])
             df_bal = pd.concat([pd.DataFrame(X_bal),pd.DataFrame(y_bal)],axis=1)
             return df_bal
         else:
@@ -239,6 +252,7 @@ def full_pipeline(df):
         ('one_hot_with_feat_names', OneHotWithFeatNames()),
         ('ordinal_feat_names', OrdinalFeatNames()),
         ('min_max_with_feat_names', MinMaxWithFeatNames()),
+        ('change_to_num_target', ChangeToNumTarget()),
         ('oversample_smote', OversampleSMOTE())
     ])
     df_pipe_prep = pipeline.fit_transform(df)
@@ -417,15 +431,15 @@ st.write(train_copy_with_profile_to_pred)
 
 
 
-train_copy_prep = full_pipeline(train_copy)
+# train_copy_prep = full_pipeline(train_copy)
 
 
 
 
 
-X_train_copy_prep = train_copy_prep.iloc[:,:-1]
+# X_train_copy_prep = train_copy_prep.iloc[:,:-1]
 
-y_train_copy_prep = train_copy_prep.iloc[:,-1]
+# y_train_copy_prep = train_copy_prep.iloc[:,-1]
 
 
 
@@ -433,7 +447,9 @@ y_train_copy_prep = train_copy_prep.iloc[:,-1]
 
 train_copy_with_profile_to_pred_prep = full_pipeline(train_copy_with_profile_to_pred)
 
-st.write(train_copy_with_profile_to_pred_prep)
+profile_to_pred_prep = train_copy_with_profile_to_pred_prep[train_copy_with_profile_to_pred_prep['Is high risk'] == 0].iloc[-1:,:-1]
+
+st.write(profile_to_pred_prep)
 
 # profile_to_pred_prep = train_copy_with_profile_to_pred.iloc[-1:,:-1]
 
