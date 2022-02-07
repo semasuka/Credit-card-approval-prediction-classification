@@ -265,7 +265,7 @@ def full_pipeline(df):
 
 st.write("""
 # Credit card approval prediction
-This app predicts if an applicant will be approved for a credit card or not. Each time there is a hard enquiry your credit score is affected negatively. This app predict the probability of being approved without affecting your credit score. Just fill in the following information and click on the Predict button.:
+This app predicts if an applicant will be approved for a credit card or not. Just fill in the following information and click on the Predict button.
 """)
 
 #Gender input
@@ -451,8 +451,8 @@ lottie_loading_an = load_lottieurl('https://assets3.lottiefiles.com/packages/lf2
 
 def make_prediction():
     # connect to s3 bucket
-    client = boto3.client('s3', aws_access_key_id=st.secrets["access_key"],aws_secret_access_key=st.secrets["secret_access_key"]) # for s3 API keys when deployed on streamlit share
-    #client = boto3.client('s3', aws_access_key_id=access_key,aws_secret_access_key=secret_access_key) # for s3 API keys when deployed on locally
+    #client = boto3.client('s3', aws_access_key_id=st.secrets["access_key"],aws_secret_access_key=st.secrets["secret_access_key"]) # for s3 API keys when deployed on streamlit share
+    client = boto3.client('s3', aws_access_key_id='AKIA5BJZ5KA3HI6JPVWH',aws_secret_access_key='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') # for s3 API keys when deployed on locally
 
     bucket_name = "creditapplipred"
     key = "gradient_boosting_model.sav"
@@ -471,10 +471,10 @@ if predict_bt:
     with st_lottie_spinner(lottie_loading_an, quality='high', height='200px', width='200px'):
         final_pred = make_prediction()
     # if final_pred exists, then stop displaying the loading animation
-    if final_pred[0] == 1.0:
+    if final_pred[0] == 0:
         st.success('## You have been approved for a credit card')
         st.balloons()
-    else:
+    elif final_pred[0] == 1:
         st.error('## Unfortunately, you have not been for a credit card')
 
 
