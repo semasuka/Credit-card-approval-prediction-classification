@@ -475,7 +475,7 @@ if predict_bt:
         st.success('## You have been approved for a credit card')
         st.balloons()
     elif final_pred[0] == 1:
-        st.error('## Unfortunately, you have not been for a credit card')
+        st.error('## Unfortunately, you have not been approved for a credit card')
 
 
 

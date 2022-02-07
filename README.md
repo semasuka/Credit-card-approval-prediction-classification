@@ -101,12 +101,16 @@ Top 3 models (with default parameters)
 
 ## Lessons learned and recommendation
 
-- Based on the analysis on this project, we found out that the education level and type of relationship are the most predictive features to determine if someone makes more or less than 50K. Other features like Capital gain, hours work and age are also usefull. The least usefull features are: their occupation and the workclass they belong to.
-- Recommendation would be to focus more on the most predictive feature when looking at the applicant profile, and pay less attention on their occupation and workclass.
+- Based on the analysis on this project, we found out that income, family member count and employment length, are the most predictive features to determine if an applicant will be approved for a credit card or not. Other features like age and working employment status are also useful. The least useful features are: type of dwelling and car ownership.
+- Recommendation would be to focus more on the most predictive feature when looking at the applicant profile, and pay less attention on the least predictive features.
 ## Limitation and what can be improved
 
-- Speed: since the model is stored on AWS S3, it can take some few seconds to load. Solution: cache the model with the Streamlit @st.experimental_singleton for faster reload.
-- Dataset used: the dataset used is from 1990, inflation has not been taken into consideration and the countries's economies have changed since then. Solution: retrain with a more recent dataset.
+- Combine this model with with a regression model to predict how much of a credit limit an applicant will be approved for.
+- Hyperparameter tuning with grid search or random search.
+- Better interpretation of the chi-square test
+- Retrain the model without the least predictive features
+
+
 - Hyperparameter tuning: I used RandomeSearchCV to save time but could be improved by couple of % with GridSearchCV.
 
 
@@ -157,7 +161,7 @@ If you are having issue with streamlit, please follow [this tutorial on how to s
 
 ## Explore the notebook
 
-To explore the notebook file [here](https://nbviewer.org/github/semasuka/Income-classification/blob/master/Income_Classification.ipynb)
+To explore the notebook file [here](https://nbviewer.org/github/semasuka/Credit-card-approval-prediction-classification/blob/main/Credit_card_approval_prediction.ipynb)
 
 ## Deployment on streamlit
 
@@ -174,6 +178,8 @@ To deploy this project on streamlit share, follow these steps:
 ## App deployed on Streamlit
 
 ![Streamlit GIF](assets/gif_streamlit.gif)
+
+Video to gif [tool](https://ezgif.com/)
 ## Repository structure
 
 
@@ -181,39 +187,40 @@ To deploy this project on streamlit share, follow these steps:
 
 
 ├── datasets
-│   ├── GDP.csv                     <- the data used to feature engineering/enriched the original data.
-│   ├── test.csv                    <- the test data.
-│   ├── train.csv                   <- the train data.
+│   ├── application_record.csv                    <- the dataset with profile information (without the target variable).
+│   ├── credit_records.csv                        <- the dataset with account credit records (used to derive the target variable).
+│   ├── test.csv                                  <- the test data (with target variable).
+│   ├── train.csv                                 <- the train data (with target variable).
 │
 │
 ├── assets
-│   ├── confusion_matrix.png        <- confusion matrix image used in the README.
-│   ├── gif_streamlit.gif           <- gif file used in the README.
-│   ├── heatmap.png                 <- heatmap image used in the README.
-│   ├── Income_classification.png   <- banner image used in the README.
-│   ├── environment.yml             <- list of all the dependencies with their versions(for conda environment).
-│   ├── roc.png                     <- ROC image used in the README.
+│   ├── confusion_matrix.png                      <- confusion matrix image used in the README.
+│   ├── gif_streamlit.gif                         <- gif file used in the README.
+│   ├── heatmap.png                               <- heatmap image used in the README.
+│   ├── Credit_card_approval_banner.png           <- banner image used in the README.
+│   ├── environment.yml                           <- list of all the dependencies with their versions(for conda environment).
+│   ├── roc.png                                   <- ROC image used in the README.
 │
 ├── pandas_profile_file
-│   ├── income_class_profile.html   <- exported panda profile html file.
+│   ├── credit_pred_profile.html                  <- exported panda profile html file.
 │
 │
-├── .gitignore                      <- used to ignore certain folder and files that won't be commit to git.
+├── .gitignore                                    <- used to ignore certain folder and files that won't be commit to git.
 │
 │
-├── Income_Classification.ipynb     <- main python notebook where all the analysis and modeling are done.
+├── Credit_card_approval_prediction.ipynb         <- main python notebook where all the analysis and modeling are done.
 │
 │
-├── LICENSE                         <- license file.
+├── LICENSE                                       <- license file.
 │
 │
-├── income_class_st.py              <- file with the best model and best hyperparameter with streamlit component for rendering the interface.
+├── cc_approval_pred.py                           <- file with the model and streamlit component for rendering the interface.
 │
 │
-├── README.md                       <- this readme file.
+├── README.md                                     <- this readme file.
 │
 │
-├── requirements.txt                <- list of all the dependencies with their versions(used for Streamlit ).
+├── requirements.txt                              <- list of all the dependencies with their versions(used for Streamlit).
 
 ```
 ## Contribution
