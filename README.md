@@ -87,7 +87,7 @@ Top 3 models (with default parameters)
 
 
 - ***The final model used is: Gradient boosting***
-- ***Metrics used: Recall (90%)***
+- ***Metrics used: Recall***
 - Why choose precision as metrics:
   Since the objective of this problem is to minimize the risk of credit default for the financial institution, the metrics to use depends on the current economical situation:
 
@@ -121,13 +121,13 @@ git init
 Clone the project
 
 ```bash
-git clone https://github.com/semasuka/Income-classification.git
+git clone https://github.com/semasuka/Credit-card-approval-prediction-classification.git
 ```
 
 enter the project directory
 
 ```bash
-cd Income-classification
+cd Credit-card-approval-prediction-classification
 ```
 
 Create a conda virtual environment and install all the packages from the environment.yml (recommended)
@@ -151,7 +151,7 @@ conda list
 Start the streamlit server locally
 
 ```bash
-streamlit run income_class_st.py
+streamlit run cc_approval_pred.py
 ```
 If you are having issue with streamlit, please follow [this tutorial on how to set up streamlit](https://docs.streamlit.io/library/get-started/installation)
 
