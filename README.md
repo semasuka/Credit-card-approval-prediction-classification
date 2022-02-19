@@ -180,14 +180,6 @@ Video to gif [tool](https://ezgif.com/)
 
 ```
 
-
-├── datasets
-│   ├── application_record.csv                    <- the dataset with profile information (without the target variable).
-│   ├── credit_records.csv                        <- the dataset with account credit records (used to derive the target variable).
-│   ├── test.csv                                  <- the test data (with target variable).
-│   ├── train.csv                                 <- the train data (with target variable).
-│
-│
 ├── assets
 │   ├── confusion_matrix.png                      <- confusion matrix image used in the README.
 │   ├── gif_streamlit.gif                         <- gif file used in the README.
@@ -195,6 +187,13 @@ Video to gif [tool](https://ezgif.com/)
 │   ├── Credit_card_approval_banner.png           <- banner image used in the README.
 │   ├── environment.yml                           <- list of all the dependencies with their versions(for conda environment).
 │   ├── roc.png                                   <- ROC image used in the README.
+│
+├── datasets
+│   ├── application_record.csv                    <- the dataset with profile information (without the target variable).
+│   ├── credit_records.csv                        <- the dataset with account credit records (used to derive the target variable).
+│   ├── test.csv                                  <- the test data (with target variable).
+│   ├── train.csv                                 <- the train data (with target variable).
+│
 │
 ├── pandas_profile_file
 │   ├── credit_pred_profile.html                  <- exported panda profile html file.
