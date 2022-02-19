@@ -21,9 +21,6 @@ Badge [source](https://shields.io/)
 
 ## Table of Contents
 
-  - [People with the highest education level, and who are either husbands or wifes make more money](#people-with-the-highest-education-level-and-who-are-either-husbands-or-wifes-make-more-money)
-  - [Authors](#authors)
-  - [Table of Contents](#table-of-contents)
   - [Business problem](#business-problem)
   - [Data source](#data-source)
   - [Methods](#methods)
