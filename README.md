@@ -50,7 +50,7 @@ This app predicts if an applicant will be approved for a credit card or not. Eac
 
 - Exploratory data analysis
 - Bivariate analysis
-- Multivarate correlation
+- Multivariate correlation
 - S3 bucket model hosting
 - Model deployment
 ## Tech Stack
