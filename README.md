@@ -106,9 +106,7 @@ Top 3 models (with default parameters)
 - Hyperparameter tuning with grid search or random search.
 - Better interpretation of the chi-square test
 - Retrain the model without the least predictive features
-
-
-- Hyperparameter tuning: I used RandomeSearchCV to save time but could be improved by couple of % with GridSearchCV.
+- Hyperparameter tuning: I used RandomSearchCV to save time but could be improved by couple of % with GridSearchCV.
 
 
 ## Run Locally
