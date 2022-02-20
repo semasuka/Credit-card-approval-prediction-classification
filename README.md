@@ -66,11 +66,11 @@ Correlation between the features.
 
 ![heatmap](assets/heatmap.png)
 
-Confusion matrix of gradrient boosting classifier.
+Confusion matrix of gradient boosting classifier.
 
 ![Confusion matrix](assets/confusion_matrix.png)
 
-ROC curve of gradrient boosting classifier.
+ROC curve of gradient boosting classifier.
 
 ![ROC curve](assets/roc.png)
 
