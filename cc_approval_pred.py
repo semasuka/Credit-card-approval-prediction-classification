@@ -309,7 +309,7 @@ st.write("""
 dwelling_type_values = list(value_cnt_norm_cal(full_data,'Dwelling').index)
 dwelling_type_key = ['House / apartment', 'Live with parents', 'Municipal apartment ', 'Rented apartment', 'Office apartment', 'Co-op apartment']
 dwelling_type_dict = dict(zip(dwelling_type_key,dwelling_type_values))
-input_dwelling_type_key = st.selectbox('Select your workclass', dwelling_type_key)
+input_dwelling_type_key = st.selectbox('Select the type of dwelling you reside in', dwelling_type_key)
 input_dwelling_type_val = dwelling_type_dict.get(input_dwelling_type_key)
 
 
