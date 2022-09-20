@@ -34,6 +34,7 @@ Badge [source](https://shields.io/)
   - [App deployed on Streamlit](#app-deployed-on-streamlit)
   - [Repository structure](#repository-structure)
   - [Contribution](#contribution)
+  - [Project featuring](#project-featuring)
   - [License](#license)
 
 
@@ -220,6 +221,20 @@ Video to gif [tool](https://ezgif.com/)
 ## Contribution
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change or contribute.
+
+## Project featuring
+
+This project was featured on [Luke Barousse Youtube Channel](https://www.youtube.com/c/LukeBarousse), Click on the thumbnail to watch the video
+
+<iframe
+    width="640"
+    height="480"
+    src="https://www.youtube.com/watch?v=5Q0gB7imNOo&t=14s"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+>
+</iframe>
 
 ## License
 
