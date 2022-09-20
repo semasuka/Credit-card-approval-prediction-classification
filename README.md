@@ -226,7 +226,7 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 This project was featured on [Luke Barousse Youtube Channel](https://www.youtube.com/c/LukeBarousse), Click on the thumbnail to watch the video
 
-[![IMAGE_ALT](https://img.youtube.com/vi/5Q0gB7imNOo&t/0.jpg)](https://www.youtube.com/watch?v=5Q0gB7imNOo&t=224s)
+[![IMAGE_ALT](https://img.youtube.com/vi/5Q0gB7imNOo/0.jpg)](https://www.youtube.com/watch?v=5Q0gB7imNOo&t=224s)
 
 
 ## License
