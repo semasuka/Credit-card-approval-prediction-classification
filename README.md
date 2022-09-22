@@ -86,7 +86,7 @@ Top 3 models (with default parameters)
 
 - ***The final model used is: Gradient boosting***
 - ***Metrics used: Recall***
-- Why choose precision as metrics:
+- Why choose Recall as metrics:
   Since the objective of this problem is to minimize the risk of credit default for the financial institution, the metrics to use depends on the current economical situation:
 
   - During the time of a bull market (when the economy is expending), people feel wealthy and usually are employed. Money is usually cheap and the risk of default is low. The financial institution is able to handle the risk of default therefore is not very strict on giving out credit. The financial institution can handle a number of bad clients as long as the vast majority of applicants are good clients (aka those who payback their credit).In this case, having a good recall (sensitivity) is ideal.
