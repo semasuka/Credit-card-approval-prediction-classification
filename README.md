@@ -84,23 +84,26 @@ Top 3 models (with default parameters)
 | Adaboost               	    | 79% 	            |
 
 
-- ***The final model used is: Gradient boosting***
-- ***Metrics used: Recall***
-- Why choose Recall as metrics:
-  Since the objective of this problem is to minimize the risk of credit default for the financial institution, the metrics to use depends on the current economical situation:
 
-  - During the time of a bull market (when the economy is expending), people feel wealthy and usually are employed. Money is usually cheap and the risk of default is low. The financial institution is able to handle the risk of default therefore is not very strict on giving out credit. The financial institution can handle a number of bad clients as long as the vast majority of applicants are good clients (aka those who payback their credit).In this case, having a good recall (sensitivity) is ideal.
-  - During a bear market (when the economy is contracting), people loose their jobs and their money through the stock market. Many people struggle to meet their financial obligations. The financial institution therefore tend to be more conservative on giving out credit or loans. The financial institution can't afford to give out credit to clients who won't be able to pay back their credit. The financial institution would rather have a smaller number of good clients even if it means that some good clients where denied credit, and ideally not have any bad client. In this case, having a good precision (specificity) is desirable.
+- **The final model used for this project: Gradient boosting**
+- **Metrics used: Recall**
+- **Why choose recall as metrics**:
+  Since the objective of this problem is to minimize the risk of a credit default, the metrics to use depends on the current economic situation:
 
-    Note: There is always a trade-off between precision and recall. Choosing the right metrics depends on the problem you are solving.
+  - During a bull market (when the economy is expanding), people feel wealthy and are employed. Money is usually cheap, and the risk of default is low because of economic stability and low unemployment. The financial institution can handle the risk of default; therefore, it is not very strict about giving credit. The financial institution can handle some bad clients as long as most credit card owners are good clients (aka those who pay back their credit in time and in total).In this case, having a good recall (sensitivity) is ideal.
 
-    Conclusion: In our case, since we are in the longest bull market (not including the March 2020 flash crash), we will use recall as our metric.
+  - During a bear market (when the economy is contracting), people lose their jobs and money through the stock market and other investment venues. Many people struggle to meet their financial obligations. The financial institution, therefore, tends to be more conservative in giving out credit or loans. The financial institution can't afford to give out credit to many clients who won't be able to pay back their credit. The financial institution would rather have a smaller number of good clients, even if it means that some good clients are denied credit. In this case, having a good precision (specificity) is desirable.
+
+    ***Note***: There is always a trade-off between precision and recall. Choosing the right metrics depends on the problem you are solving.
+
+    ***Conclusion***: Since the time I worked on this project (beginning 2022), we were in the longest bull market (excluding March 2020 flash crash) ever recorded; we will use recall as our metric.
 
 
-## Lessons learned and recommendation
+ **Lessons learned and recommendation**
 
-- Based on the analysis on this project, we found out that income, family member count and employment length, are the most predictive features to determine if an applicant will be approved for a credit card or not. Other features like age and working employment status are also useful. The least useful features are: type of dwelling and car ownership.
-- Recommendation would be to focus more on the most predictive feature when looking at the applicant profile, and pay less attention on the least predictive features.
+- Based on this project's analysis, income, family member headcount, and employment length are the three most predictive features in determining whether an applicant will be approved for a credit card. Other features like age and working employment status are also helpful. The least useful features are the type of dwelling and car ownership.
+- The recommendation would be to focus more on the most predictive features when looking at the applicant profile and pay less attention to the least predictive features.
+
 ## Limitation and what can be improved
 
 - Combine this model with with a regression model to predict how much of a credit limit an applicant will be approved for.
