@@ -34,6 +34,7 @@ Badge [source](https://shields.io/)
   - [App deployed on Streamlit](#app-deployed-on-streamlit)
   - [Repository structure](#repository-structure)
   - [Contribution](#contribution)
+  - [Blog post](#blog-post)
   - [Project featuring](#project-featuring)
   - [License](#license)
 
@@ -224,6 +225,10 @@ Video to gif [tool](https://ezgif.com/)
 ## Contribution
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change or contribute.
+
+## Blog post
+
+The accompanying blog post for this project can be found [here](https://semasuka.github.io/blog/2022/10/12/credit-card-approval-prediction.html)
 
 ## Project featuring
 
