@@ -264,7 +264,7 @@ def full_pipeline(df):
 ############################# Streamlit ############################
 
 st.write("""
-# Credit card approval prediction
+# Credit card approval prediction - Crédito Teste - Lispa Hack Financial Team
 This app predicts if an applicant will be approved for a credit card or not. Just fill in the following information and click on the Predict button.
 """)
 
